@@ -29,20 +29,28 @@ ApplicationWindow {
     Item {
         id: listViewPage
 
-        POIListModel {
-            id: oListModel
-        }
+           ListModel {
+               id: oListModel
+           }
 
-        Item {
-            id: oContentWrapper;
-            anchors.fill: parent;
+           function fillModelFromCpp() {
+               oListModel.clear();
+               for (let i = 0; i < poiProvider.poiData.length; ++i)
+                   oListModel.append(poiProvider.poiData[i]);
+           }
 
-            POIListVIew {
-                id: oListView;
-                pModel: oListModel;
-                pDraggedItemParent: oContentWrapper;
-            }
-        }
+           Component.onCompleted: fillModelFromCpp()
+
+           Item {
+               id: oContentWrapper;
+               anchors.fill: parent;
+
+               POIListVIew {
+                   id: oListView;
+                   pModel: oListModel;
+                   pDraggedItemParent: oContentWrapper;
+               }
+           }
 
         Button {
             text: qsTr("Go to Map")
@@ -67,15 +75,15 @@ ApplicationWindow {
 
             // Dynamically create markers for each POI
             Repeater {
-                model: oListModel
+                model: poiProvider.poiData
                 MapQuickItem {
                     anchorPoint.x: 12
                     anchorPoint.y: 12
-                    coordinate: QtPositioning.coordinate(model.latitude, model.longitude)
+                    coordinate: QtPositioning.coordinate(modelData.latitude, modelData.longitude)
                     sourceItem: Rectangle {
                         width: 24
                         height: 24
-                        color: model.color;
+                        color: modelData.color;
                         radius: 12
                     }
                 }

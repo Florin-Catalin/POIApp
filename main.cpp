@@ -22,9 +22,9 @@ int main(int inCounter, char *inArguments[]) {
 
     const QUrl oURL(QStringLiteral("qrc:/main.qml"));
     // Register POIDataProvider
-    POIDataProvider poiDataProvider;
+    POIDataProvider poiProvider;
 
-    oEngine.rootContext()->setContextProperty("poiDataProvider", &poiDataProvider);
+    oEngine.rootContext()->setContextProperty("poiProvider", &poiProvider);
     QObject::connect(
         &oEngine, &QQmlApplicationEngine::objectCreated,
         &oApplication, [oURL](QObject *obj, const QUrl &objUrl) {
