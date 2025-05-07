@@ -5,20 +5,19 @@
 #include <QVariantList>
 
 class POIDataProvider : public QObject {
-    Q_OBJECT // Ensure this macro is present
+  Q_OBJECT // Ensure this macro is present
 
-public:
-    explicit POIDataProvider(QObject *parent = nullptr);
+      public : explicit POIDataProvider(QObject *parent = nullptr);
 
-    Q_PROPERTY(QVariantList poiData READ poiData NOTIFY poiDataChanged)
+  Q_PROPERTY(QVariantList poiData READ poiData NOTIFY poiDataChanged)
 
-    QVariantList poiData() const;
+  QVariantList poiData() const;
 
 signals:
-    void poiDataChanged();
+  void poiDataChanged();
 
 private:
-    QVariantList m_poiData;
+  QVariantList m_poiData;
 };
 
 #endif // POIDATAPROVIDER_H
