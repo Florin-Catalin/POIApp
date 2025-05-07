@@ -4,12 +4,9 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-// Application includes
-
-// Constants
 
 // Qt Quick Application
-int main(int inCounter, char *inArguments[]) {
+auto main(int inCounter, char *inArguments[]) -> int {
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -26,7 +23,7 @@ int main(int inCounter, char *inArguments[]) {
   QObject::connect(
       &oEngine, &QQmlApplicationEngine::objectCreated, &oApplication,
       [oURL](QObject *obj, const QUrl &objUrl) {
-        if (!obj && oURL == objUrl) {
+          if ((nullptr == obj) && oURL == objUrl) {
           QCoreApplication::exit(-1);
         }
       },
@@ -34,5 +31,5 @@ int main(int inCounter, char *inArguments[]) {
 
   oEngine.load(oURL);
 
-  return oApplication.exec();
+  return QGuiApplication::exec();
 }
