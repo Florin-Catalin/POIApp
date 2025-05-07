@@ -5,18 +5,17 @@ import QtLocation 5.15
 import QtPositioning 5.15
 
 // Application includes
-import "qrc:/AGlobal.js" as GLOBAL;
-import "qrc:/AColors.js" as COLORS;
+import "qrc:/AGlobal.js" as GLOBAL
+import "qrc:/AColors.js" as COLORS
 
 ApplicationWindow {
-    property string pText: qsTr("POI App");
-    property bool pIsDesktop: GLOBAL.mIsDesktop();
-
-    id: oApplicationWindow;
-    width: pIsDesktop ? GLOBAL.desktopApplicationWidth() : maximumWidth;
-    height: pIsDesktop ? GLOBAL.desktopApplicationHeight() : maximumHeight;
-    visible: true;
-    title: oApplicationWindow.pText;
+    id: oApplicationWindow
+    property string pText: qsTr("POI App")
+    property bool pIsDesktop: GLOBAL.mIsDesktop()
+    width: pIsDesktop ? GLOBAL.desktopApplicationWidth() : maximumWidth
+    height: pIsDesktop ? GLOBAL.desktopApplicationHeight() : maximumHeight
+    visible: true
+    title: oApplicationWindow.pText
 
     StackView {
         id: stackView
@@ -83,7 +82,7 @@ ApplicationWindow {
                     sourceItem: Rectangle {
                         width: 24
                         height: 24
-                        color: modelData.color;
+                        color: modelData.color
                         radius: 12
                     }
                 }
