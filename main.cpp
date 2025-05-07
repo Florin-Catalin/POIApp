@@ -5,6 +5,7 @@
 #include <QQmlContext>
 
 
+
 // Qt Quick Application
 auto main(int inCounter, char *inArguments[]) -> int {
 
