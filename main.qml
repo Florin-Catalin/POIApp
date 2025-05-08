@@ -85,8 +85,33 @@ ApplicationWindow {
                         color: modelData.color
                         radius: 12
                     }
+
+
+                    // Handle click
+                             MouseArea {
+                                 anchors.fill: parent
+                                 onClicked: {
+                                     poiInfoPopup.visible = true
+                                     poiInfoPopup.poiName = modelData.name
+                                     poiInfoPopup.poiDescription = modelData.description
+                                 }
+                             }
                 }
+
             }
+
+            // Info popup
+              Popup {
+                  id: poiInfoPopup
+                  property string poiName
+                  property string poiDescription
+                  visible: false
+                  contentItem: Column {
+                      Text { text: poiInfoPopup.poiName }
+                      Text { text: poiInfoPopup.poiDescription }
+                      Button { text: "Close"; onClicked: poiInfoPopup.visible = false }
+                  }
+              }
         }
 
         Button {
