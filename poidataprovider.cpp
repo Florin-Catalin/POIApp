@@ -1,6 +1,6 @@
 #include "poidataprovider.h"
 
-POIDataProvider::POIDataProvider(QObject *parent) : QObject(parent) {
+POIDataProvider::POIDataProvider(QObject *parent) : QObject(parent), m_poiData() {
 
   // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers)
   m_poiData = {QVariantMap{{"name", "Point A"},
