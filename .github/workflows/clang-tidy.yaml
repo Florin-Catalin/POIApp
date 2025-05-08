@@ -38,3 +38,4 @@ jobs:
               -isystem "$QT_INCLUDE_PATH/QtQml" \
               -std=c++17
           done
+
