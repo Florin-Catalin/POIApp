@@ -28,28 +28,28 @@ ApplicationWindow {
     Item {
         id: listViewPage
 
-           ListModel {
-               id: oListModel
-           }
+        ListModel {
+            id: oListModel
+        }
 
-           function fillModelFromCpp() {
-               oListModel.clear();
-               for (let i = 0; i < poiProvider.poiData.length; ++i)
-                   oListModel.append(poiProvider.poiData[i]);
-           }
+        function fillModelFromCpp() {
+            oListModel.clear();
+            for (let i = 0; i < poiProvider.poiData.length; ++i)
+                oListModel.append(poiProvider.poiData[i]);
+        }
 
-           Component.onCompleted: fillModelFromCpp()
+        Component.onCompleted: fillModelFromCpp()
 
-           Item {
-               id: oContentWrapper;
-               anchors.fill: parent;
+        Item {
+            id: oContentWrapper
+            anchors.fill: parent
 
-               POIListVIew {
-                   id: oListView;
-                   pModel: oListModel;
-                   pDraggedItemParent: oContentWrapper;
-               }
-           }
+            POIListVIew {
+                id: oListView
+                pModel: oListModel
+                pDraggedItemParent: oContentWrapper
+            }
+        }
 
         Button {
             text: qsTr("Go to Map")

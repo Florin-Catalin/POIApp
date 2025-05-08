@@ -9,4 +9,4 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 SpacesInAngles: false
 ReflowComments: true
-Standard: Cpp17
+Standard: Cpp

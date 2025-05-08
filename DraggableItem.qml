@@ -2,54 +2,48 @@
 import QtQuick 2.15
 
 // Application includes
-import "qrc:/AColors.js" as COLORS;
-
+import "qrc:/AColors.js" as COLORS
 
 // Component
 Item {
+    id: oRoot
 
-    default property Item pContentItem;
-    property Item pDraggedItemParent;
-    property bool pDragActive: false;
-    property int pScrollEdge: 10;
-    property int pScrollingDirection: 0;
-    property ListView pListView: ListView.view;
+    default property Item pContentItem
+    property Item pDraggedItemParent
+    property bool pDragActive: false
+    property int pScrollEdge: 10
+    property int pScrollingDirection: 0
+    property ListView pListView: ListView.view
 
-    signal sgMoveItem(int inFrom, int inTo);
-
-    id: oRoot;
-    width: pContentItem.width;
-    height: oPlaceholderTop.height + oWrapperParent.height + oPlaceholderBottom.height;
+    signal sgMoveItem(int inFrom, int inTo)
+    width: pContentItem.width
+    height: oPlaceholderTop.height + oWrapperParent.height + oPlaceholderBottom.height
 
     onPContentItemChanged: {
-
         pContentItem.parent = oContentItemWrapper;
     }
 
     Rectangle {
-
-        id: oPlaceholderTop;
-        anchors.left: parent.left;
-        anchors.right: parent.right;
-        anchors.top: parent.top;
-        height: 0;
-        color: COLORS.mSaladDark();
-        opacity: 0.2;
+        id: oPlaceholderTop
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        height: 0
+        color: COLORS.mSaladDark()
+        opacity: 0.2
     }
 
     Item {
-
-        id: oWrapperParent;
-        anchors.left: parent.left;
-        anchors.right: parent.right;
-        anchors.top: oPlaceholderTop.bottom;
-        height: pContentItem.height;
+        id: oWrapperParent
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: oPlaceholderTop.bottom
+        height: pContentItem.height
 
         Rectangle {
-
-            id: oContentItemWrapper;
-            anchors.fill: parent;
-            Drag.active: oDragArea.drag.active;
+            id: oContentItemWrapper
+            anchors.fill: parent
+            Drag.active: oDragArea.drag.active
 
             Drag.hotSpot {
 
@@ -58,54 +52,46 @@ Item {
             }
 
             MouseArea {
-
-                id: oDragArea;
-                anchors.fill: parent;
-                drag.target: pDragActive ? parent : undefined;
-                drag.axis: ListView.orientation === ListView.Horizontal ? Drag.XAxis : Drag.YAxis;
-                drag.smoothed: false;
+                id: oDragArea
+                anchors.fill: parent
+                drag.target: pDragActive ? parent : undefined
+                drag.axis: ListView.orientation === ListView.Horizontal ? Drag.XAxis : Drag.YAxis
+                drag.smoothed: false
 
                 onCanceled: {
-
                     console.log("oDragArea onCanceled");
                     pDragActive = false;
                 }
 
                 onClicked: {
-
                     console.log("oDragArea onClicked");
                 }
 
                 onEntered: {
-
                     console.log("oDragArea onEntered");
                 }
 
                 onExited: {
-
                     console.log("oDragArea onExited");
                 }
 
                 onPositionChanged: {
-
-                    console.log("oDragArea onPositionChanged x:",oDragArea.mouseX," y:",oDragArea.mouseY);
+                    console.log("oDragArea onPositionChanged x:", oDragArea.mouseX, " y:", oDragArea.mouseY);
                 }
 
                 onPressAndHold: {
-
                     console.log("oDragArea onPressAndHold");
                     pDragActive = true;
                 }
 
                 onPressed: {
-
                     console.log("oDragArea onPressed");
                 }
 
                 onReleased: {
-
                     console.log("oDragArea onReleased");
-                    if (drag.active) mMoveItem();
+                    if (drag.active)
+                        mMoveItem();
                     pDragActive = false;
                 }
             }
@@ -113,41 +99,37 @@ Item {
     }
 
     Rectangle {
-
-        id: oPlaceholderBottom;
-        anchors.left: parent.left;
-        anchors.right: parent.right;
-        anchors.top: oWrapperParent.bottom;
-        height: 0;
-        color: COLORS.mSaladDark();
-        opacity: 0.2;
+        id: oPlaceholderBottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: oWrapperParent.bottom
+        height: 0
+        color: COLORS.mSaladDark()
+        opacity: 0.2
     }
 
     SmoothedAnimation {
-
-        id: oAnimationUp;
-        target: pListView;
-        property: "contentY";
-        to: 0;
-        running: pScrollingDirection == -1;
+        id: oAnimationUp
+        target: pListView
+        property: "contentY"
+        to: 0
+        running: pScrollingDirection == -1
     }
 
     SmoothedAnimation {
-
-        id: oAnimationDown;
-        target: pListView;
-        property: "contentY";
-        to: pListView.contentHeight - pListView.height;
-        running: pScrollingDirection == 1;
+        id: oAnimationDown
+        target: pListView
+        property: "contentY"
+        to: pListView.contentHeight - pListView.height
+        running: pScrollingDirection == 1
     }
 
     Loader {
-
-        id: oLoaderTopDropArea;
-        active: model.index === 0;
-        anchors.left: parent.left;
-        anchors.right: parent.right;
-        anchors.bottom: oWrapperParent.verticalCenter;
+        id: oLoaderTopDropArea
+        active: model.index === 0
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: oWrapperParent.verticalCenter
         height: pContentItem.height
         sourceComponent: Component {
 
@@ -159,55 +141,52 @@ Item {
     }
 
     DropArea {
+        id: oBottomDropArea
 
-        property int pDropIndex: model.index + 1;
-        property bool pIsLast: model.index === pListView.count - 1;
-
-        id: oBottomDropArea;
-        anchors.left: parent.left;
-        anchors.right: parent.right;
-        anchors.top: oWrapperParent.verticalCenter;
-        enabled: !oDragArea.drag.active;
-        height: pIsLast ? pListView.contentHeight - y : pContentItem.height;
-        onDropped: console.log("oBottomDropArea onDropped");
-        onEntered: console.log("oBottomDropArea onEntered");
-        onExited: console.log("oBottomDropArea onExited");
-        onPositionChanged: console.log("oBottomDropArea onPositionChanged x:",oBottomDropArea.drag.x,"y:",oBottomDropArea.drag.y);
+        property int pDropIndex: model.index + 1
+        property bool pIsLast: model.index === pListView.count - 1
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: oWrapperParent.verticalCenter
+        enabled: !oDragArea.drag.active
+        height: pIsLast ? pListView.contentHeight - y : pContentItem.height
+        onDropped: console.log("oBottomDropArea onDropped")
+        onEntered: console.log("oBottomDropArea onEntered")
+        onExited: console.log("oBottomDropArea onExited")
+        onPositionChanged: console.log("oBottomDropArea onPositionChanged x:", oBottomDropArea.drag.x, "y:", oBottomDropArea.drag.y)
     }
 
     states: [
-
         State {
 
-            name: "DRAGING";
-            when: oDragArea.drag.active;
+            name: "DRAGING"
+            when: oDragArea.drag.active
 
             ParentChange {
 
-                target: oContentItemWrapper;
-                parent: pDraggedItemParent;
+                target: oContentItemWrapper
+                parent: pDraggedItemParent
             }
 
             PropertyChanges {
 
-                target: oContentItemWrapper;
-                opacity: 0.5;
-                anchors.fill: undefined;
-                width: pContentItem.width;
-                height: pContentItem.height;
+                target: oContentItemWrapper
+                opacity: 0.5
+                anchors.fill: undefined
+                width: pContentItem.width
+                height: pContentItem.height
             }
 
             PropertyChanges {
 
-                target: oWrapperParent;
-                height: 0;
+                target: oWrapperParent
+                height: 0
             }
 
             PropertyChanges {
 
-                target: oRoot;
+                target: oRoot
                 pScrollingDirection: {
-
                     var yCoord = pListView.mapFromItem(oDragArea, 0, oDragArea.mouseY).y;
                     if (yCoord < pScrollEdge) {
                         -1;
@@ -219,78 +198,72 @@ Item {
                 }
             }
         },
-
         State {
 
-            name: "HOLDING";
-            when: pDragActive;
+            name: "HOLDING"
+            when: pDragActive
 
             PropertyChanges {
 
-                target: oContentItemWrapper;
-                opacity: 0.5;
+                target: oContentItemWrapper
+                opacity: 0.5
             }
         },
-
         State {
 
-            name: "DROP_BELOW";
-            when: oBottomDropArea.containsDrag;
+            name: "DROP_BELOW"
+            when: oBottomDropArea.containsDrag
 
             PropertyChanges {
 
-                target: oPlaceholderBottom;
-                height: pContentItem.height;
+                target: oPlaceholderBottom
+                height: pContentItem.height
             }
 
             PropertyChanges {
 
-                target: oBottomDropArea;
-                height: pContentItem.height * 2;
+                target: oBottomDropArea
+                height: pContentItem.height * 2
             }
         },
-
         State {
 
-            name: "DROP_ABOVE";
+            name: "DROP_ABOVE"
             when: {
-
                 return oLoaderTopDropArea.item != null ? oLoaderTopDropArea.item.containsDrag : false;
             }
 
             PropertyChanges {
 
-                target: oPlaceholderTop;
-                height: pContentItem.height;
+                target: oPlaceholderTop
+                height: pContentItem.height
             }
 
             PropertyChanges {
 
-                target: oLoaderTopDropArea;
-                height: pContentItem.height * 2;
+                target: oLoaderTopDropArea
+                height: pContentItem.height * 2
             }
         }
     ]
 
     Timer {
-
-        id: oTimer;
-        interval: 0;
+        id: oTimer
+        interval: 0
         onTriggered: {
-
             pListView.positionViewAtIndex(model.index, ListView.Contain);
         }
     }
 
     function mMoveItem() {
-
         var oDropArea = oContentItemWrapper.Drag.target;
-        if (!oDropArea) return;
-
+        if (!oDropArea)
+            return;
         var oDropIndex = oDropArea.pDropIndex;
-        if (model.index < oDropIndex) oDropIndex--;
-        if (model.index === oDropIndex) return;
-
+        if (model.index < oDropIndex)
+            oDropIndex--;
+        if (model.index === oDropIndex)
+            return;
         oRoot.sgMoveItem(model.index, oDropIndex);
         oTimer.start();
     }
