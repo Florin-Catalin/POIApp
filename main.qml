@@ -86,7 +86,6 @@ ApplicationWindow {
                         radius: 12
                     }
 
-
                     // Handle click
                              MouseArea {
                                  anchors.fill: parent
@@ -101,17 +100,47 @@ ApplicationWindow {
             }
 
             // Info popup
-              Popup {
-                  id: poiInfoPopup
-                  property string poiName
-                  property string poiDescription
-                  visible: false
-                  contentItem: Column {
-                      Text { text: poiInfoPopup.poiName }
-                      Text { text: poiInfoPopup.poiDescription }
-                      Button { text: "Close"; onClicked: poiInfoPopup.visible = false }
-                  }
-              }
+            Popup {
+                id: poiInfoPopup
+                property string poiName
+                property string poiDescription
+                visible: false
+                // Center the popup in the parent
+                anchors.centerIn: parent
+                // Set a fixed or proportional size if desired
+                width: parent.width * 0.6
+                height: parent.height * 0.3
+                // Make the popup background semi-transparent
+                background: Rectangle {
+                    color: "#CC222222" // semi-transparent dark background
+                    radius: 12
+                }
+                contentItem: Column {
+                    anchors.centerIn: parent
+                    spacing: 12
+                    Text {
+                        text: poiInfoPopup.poiName
+                        color: "white"
+                        font.bold: true
+                        font.pixelSize: 20
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    Text {
+                        text: poiInfoPopup.poiDescription
+                        color: "white"
+                        font.pixelSize: 16
+                        wrapMode: Text.WordWrap
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    Button {
+                        text: "Close"
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        onClicked: poiInfoPopup.visible = false
+                    }
+                }
+            }
         }
 
         Button {
