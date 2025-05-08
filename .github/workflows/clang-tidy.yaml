@@ -29,13 +29,12 @@ jobs:
             echo "Checking $file"
             clang-tidy "$file" --header-filter="^$PROJECT_ROOT/" -- \
               -I . \
-              -isystem /usr/include/qt5 \
-              -isystem /usr/include/x86_64-linux-gnu/qt5 \
-              -isystem /usr/include/qt5/QtCore \
-              -isystem /usr/include/qt5/QtGui \
-              -isystem /usr/include/qt5/QtWidgets \
-              -isystem /usr/include/qt5/QtNetwork \
-              -isystem /usr/include/qt5/QtQml \
+              -isystem "$QT_INCLUDE_PATH" \
+              -isystem "$QT_INCLUDE_PATH/QtCore" \
+              -isystem "$QT_INCLUDE_PATH/QtGui" \
+              -isystem "$QT_INCLUDE_PATH/QtWidgets" \
+              -isystem "$QT_INCLUDE_PATH/QtNetwork" \
+              -isystem "$QT_INCLUDE_PATH/QtQml" \
               -std=c++17
           done
-
+          
