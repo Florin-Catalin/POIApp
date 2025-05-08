@@ -29,9 +29,7 @@ jobs:
       - name: List all Qt include directories
         run: |
           find /usr/include -type d | grep -i qt
-          
-      - name: Debug QtCore headers
-        run: ls -l /usr/include/qt5/QtCore
+          echo "Qt include directories listed."
 
       - name: Run clang-tidy
         run: |
@@ -40,13 +38,12 @@ jobs:
             echo "Checking $file"
             clang-tidy "$file" --header-filter="^$PROJECT_ROOT/" -- \
               -I . \
-              -isystem /usr/include/qt5 \
               -isystem /usr/include/x86_64-linux-gnu/qt5 \
-              -isystem /usr/include/qt5/QtCore \
-              -isystem /usr/include/qt5/QtGui \
-              -isystem /usr/include/qt5/QtWidgets \
-              -isystem /usr/include/qt5/QtNetwork \
-              -isystem /usr/include/qt5/QtQml \
+              -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore \
+              -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui \
+              -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets \
+              -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork \
+              -isystem /usr/include/x86_64-linux-gnu/qt5/QtQml \
               -std=c++17
           done
 
