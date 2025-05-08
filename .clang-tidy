@@ -12,7 +12,7 @@ Checks: >
   -modernize-use-trailing-return-type,
   -fuchsia-trailing-return,
   -fuchsia-default-arguments-calls,
-  - cppcoreguidelines-pro-type-member-init
-  - hicpp-member-init
+  -cppcoreguidelines-pro-type-member-init
+  -hicpp-member-init
 WarningsAsErrors: ''
 HeaderFilterRegex: '.*'
