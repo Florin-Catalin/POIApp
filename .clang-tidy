@@ -5,6 +5,7 @@ Checks: >
   modernize-*,
   performance-*,
   readability-*,
+  -llvm-header-guard,
   -llvmlibc-restrict-system-libc-headers,
   -llvmlibc-callee-namespace,
   -llvmlibc-implementation-in-namespace,
